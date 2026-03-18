@@ -235,6 +235,7 @@
 
 .finch-profile-actions {
   margin-top: 8px;
+  width: 100%;
 }
 
 .finch-local-feed-surface .timeline-header,
@@ -335,6 +336,7 @@
 .finch-profile-actions form,
 .finch-profile-actions details {
   margin: 0;
+  width: 100%;
 }
 
 .finch-profile-action-form.is-pending .button,
@@ -351,6 +353,12 @@
 .finch-list-picker summary,
 .finch-local-header-actions .button {
   justify-self: start;
+}
+
+.finch-profile-actions .button,
+.finch-list-picker summary {
+  width: 100%;
+  justify-content: space-between;
 }
 
 .finch-list-picker[open] summary {
@@ -381,6 +389,9 @@
 }
 
 .finch-list-picker-panel {
+  display: grid;
+  gap: 8px;
+  width: 100%;
   padding-top: 8px;
   border-top: 1px solid var(--border);
 }

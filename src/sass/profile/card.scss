@@ -15,9 +15,10 @@
 .profile-card-info {
     @include breakable;
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
     align-items: flex-start;
-    gap: 8px;
+    gap: 10px;
 }
 
 .profile-card-tabs-name {
@@ -29,16 +30,16 @@
 }
 
 .profile-card-name-row {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     min-width: 0;
     flex-wrap: wrap;
 }
 
 .profile-card-username {
     @include breakable;
-    color: var(--fg_color);
+    color: var(--muted-foreground);
     font-size: 13px;
     display: block;
 }
@@ -90,19 +91,20 @@
 }
 
 .profile-card-extra-links {
-    margin-top: 6px;
+    margin-top: 8px;
     font-size: 13px;
     width: 100%;
 }
 
 .profile-statlist {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0;
     padding: 0;
     width: 100%;
     list-style: none;
     border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
 
     a.profile-stat {
         display: flex;
@@ -111,16 +113,12 @@
         text-decoration: none;
         color: inherit;
         text-align: left;
-        padding: 4px 16px 4px 0;
-        margin-right: 16px;
+        min-width: 0;
+        padding: 10px 12px;
+        margin-right: 0;
         border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
         background: transparent;
-
-        &:last-child {
-            margin-right: 0;
-            padding-right: 0;
-            border-right: none;
-        }
 
         &:hover {
             text-decoration: none;
@@ -150,8 +148,7 @@
 
 @media(max-width: 700px) {
     .profile-card-info {
-        display: flex;
-        align-items: flex-start;
+        grid-template-columns: 72px minmax(0, 1fr);
         gap: 12px;
     }
 
