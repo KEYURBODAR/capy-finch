@@ -1,0 +1,46 @@
+// Colors — delegated to OAT tokens loaded via oat.css before style.css.
+// Finch keeps Nitter-style panel separation, so feed surfaces must read as
+// distinct rails rather than melt into the page background.
+
+$bg_color: var(--background);
+$fg_color: var(--foreground);
+$fg_faded: var(--muted-foreground);
+$fg_dark: color-mix(in srgb, var(--muted-foreground) 82%, var(--foreground) 18%);
+$fg_nav: var(--muted-foreground);
+
+$bg_panel: var(--card);
+$bg_elements: var(--faint);
+$bg_overlays: var(--card);
+$bg_hover: color-mix(in srgb, var(--accent) 90%, var(--background) 10%);
+
+$grey: var(--muted-foreground);
+$dark_grey: color-mix(in srgb, var(--border) 88%, var(--foreground) 12%);
+$darker_grey: color-mix(in srgb, var(--accent) 88%, var(--background) 12%);
+$darkest_grey: var(--faint);
+$border_grey: var(--border);
+
+$accent: var(--accent);
+$accent_light: var(--foreground);
+$accent_dark: var(--secondary);
+$accent_border: var(--border);
+
+$play_button: var(--primary);
+$play_button_hover: var(--foreground);
+
+$more_replies_dots: var(--muted-foreground);
+$error_red: var(--danger);
+
+$verified_blue: #1da1f2;
+$verified_business: var(--warning);
+$verified_government: var(--muted-foreground);
+$icon_text: $fg_color;
+
+$tab: $grey;
+$tab_selected: $fg_color;
+
+$shadow: var(--shadow-medium);
+$shadow_dark: var(--shadow-small);
+
+// fonts
+$font_0: var(--font-sans);
+$font_1: fontello;

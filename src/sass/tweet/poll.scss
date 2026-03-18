@@ -1,0 +1,36 @@
+@import "_variables";
+
+.poll-option {
+  display: grid;
+  grid-template-columns: minmax(5rem, auto) 1fr 3.5rem;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.poll-option-label {
+  font-size: var(--text-7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: all;
+}
+
+.poll-option-pct {
+  font-size: var(--text-8);
+  color: var(--muted-foreground);
+  text-align: right;
+  font-weight: var(--font-medium);
+  pointer-events: all;
+}
+
+.poll-option.leader progress {
+  accent-color: var(--finch-accent);
+}
+
+.poll-info {
+  color: var(--muted-foreground);
+  font-size: var(--text-8);
+  margin-top: var(--space-2);
+  pointer-events: all;
+}
