@@ -40,10 +40,15 @@ nav {
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0;
+  transition: opacity var(--transition-fast);
 
   &:hover {
     color: var(--fg_color);
     text-decoration: unset;
+  }
+
+  &:active {
+    opacity: 0.7;
   }
 }
 
@@ -83,11 +88,16 @@ nav {
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
-  transition: color var(--transition-fast), opacity var(--transition-fast), border-color var(--transition-fast);
+  transition: color var(--transition-fast), opacity var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 
   &:hover {
     color: var(--fg_color);
     text-decoration: none;
+  }
+
+  &:active {
+    transform: scale(0.95);
+    opacity: 0.7;
   }
 }
 

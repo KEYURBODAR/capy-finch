@@ -125,9 +125,15 @@
   padding: 0.18rem 0.5rem;
   font-size: 12px;
   font-weight: 500;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
 
   &:hover {
     text-decoration: none;
+  }
+
+  &:active {
+    transform: scale(0.97);
+    opacity: 0.7;
   }
 }
 
@@ -404,9 +410,14 @@
   a {
     color: var(--muted-foreground);
     text-decoration: none;
+    transition: color var(--transition-fast), opacity var(--transition-fast);
 
     &:hover {
       color: var(--foreground);
+    }
+
+    &:active {
+      opacity: 0.6;
     }
   }
 
@@ -448,6 +459,16 @@
   padding: var(--space-3) var(--space-4);
   border-top: 1px solid var(--border);
   background: var(--card);
+
+  a,
+  button {
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+
+    &:active {
+      transform: scale(0.97);
+      opacity: 0.7;
+    }
+  }
 }
 
 .finch-pagination-spacer {
