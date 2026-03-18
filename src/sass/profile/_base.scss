@@ -22,44 +22,42 @@
 
 .profile-tablist {
     width: 100%;
-    background: var(--bg_panel);
-    border-bottom: 1px solid var(--border_grey);
+    background: transparent;
+    border-radius: 0;
     padding: 0;
     gap: 0;
     justify-content: flex-start;
     overflow-x: auto;
     scrollbar-width: none;
+    border-bottom: 1px solid var(--border);
 
     [role="tab"] {
-        font-size: 14px;
-        position: relative;
-        padding: 8px 14px;
-        color: var(--muted-foreground);
+        border-radius: 0;
+        padding: 10px 16px;
         background: transparent;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        font-size: 14px;
+        color: var(--muted-foreground);
         text-decoration: none;
         font-weight: 600;
         flex: 0 0 auto;
+        transition: transform var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 
         &:hover {
             background: transparent;
             color: var(--foreground);
         }
 
+        &:active {
+            transform: scale(0.98);
+        }
+
         &[aria-selected="true"] {
             background: transparent;
-            box-shadow: none;
+            border-bottom-color: var(--foreground);
             color: var(--foreground);
-            font-weight: var(--font-semibold);
-
-            &::after {
-                content: "";
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 2px;
-                background: var(--finch-accent);
-            }
+            box-shadow: none;
         }
     }
 }

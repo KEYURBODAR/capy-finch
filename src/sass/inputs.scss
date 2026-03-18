@@ -23,18 +23,6 @@ menu.buttons {
   }
 }
 
-input[type="text"],
-input[type="date"],
-input[type="number"],
-select {
-  background-color: var(--bg_panel);
-  padding: 0.4rem 0.65rem;
-  color: var(--foreground);
-  border: 1px solid var(--border_grey);
-  border-radius: 0;
-  font-size: 14px;
-}
-
 input[data-short-date] {
   min-width: 7.5rem;
   letter-spacing: 0.02em;
@@ -44,22 +32,8 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-input[type="text"],
-input[type="number"] {
-  min-height: 1.95rem;
-}
-
-select {
-  min-height: 1.95rem;
-  line-height: 1.2;
-}
-
 input[type="date"]::-webkit-inner-spin-button {
   display: none;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -111,11 +85,17 @@ input::-webkit-datetime-edit-year-field:focus {
   background: none;
   border: none;
   float: none;
-  min-height: unset;
+  min-height: 32px;
+  min-width: 32px;
   padding: 0 0 0 4px;
+  transition: transform var(--transition-fast), color var(--transition-fast);
 
   &:hover {
     color: var(--foreground);
+  }
+
+  &:active {
+    transform: scale(0.98);
   }
 }
 
@@ -138,18 +118,6 @@ fieldset.group {
 
 .pref-group {
   display: inline;
-}
-
-input[type="checkbox"] {
-  appearance: auto;
-  -webkit-appearance: checkbox;
-  accent-color: var(--primary);
-  width: 16px;
-  height: 16px;
-  margin: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
 }
 
 .tickbox,
@@ -192,9 +160,6 @@ input[type="checkbox"] {
     top: 0;
     right: 0;
     display: block;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
   }
 
   input[type="text"],
@@ -227,6 +192,5 @@ input[type="checkbox"] {
     word-break: break-all;
     white-space: pre-wrap;
     user-select: all;
-    border-radius: 0;
   }
 }

@@ -60,7 +60,6 @@
 
     figure[data-variant="avatar"] {
         --sz: 72px;
-        border-radius: 0 !important;
         border: 1px solid var(--border_grey);
         background: var(--bg_panel);
     }
@@ -97,9 +96,9 @@
 }
 
 .profile-statlist {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 6px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
     padding: 0;
     width: 100%;
     list-style: none;
@@ -108,10 +107,16 @@
     li {
         display: block;
         text-align: left;
-        padding: 8px 0 0;
-        border-top: none;
-        border-radius: 0;
+        padding: 4px 16px 4px 0;
+        margin-right: 16px;
+        border-right: 1px solid var(--border);
         background: transparent;
+
+        &:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
     }
 }
 
@@ -143,6 +148,7 @@
     padding: 0;
     border: 0;
     background: transparent;
+    font-variant-numeric: tabular-nums;
 }
 
 @media(max-width: 700px) {

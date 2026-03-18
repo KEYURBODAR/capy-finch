@@ -88,6 +88,7 @@ body {
 }
 
 * {
+  box-sizing: border-box;
   outline: none;
   margin: 0;
   text-decoration: none;
@@ -220,8 +221,6 @@ body.fixed-nav .container {
 .settings-panel {
   max-width: 760px;
   padding: 14px 16px 16px;
-  border: 1px solid var(--border);
-  background: var(--card);
 }
 
 .settings-header {
@@ -261,8 +260,6 @@ body.fixed-nav .container {
   gap: 8px;
   align-content: start;
   padding: 10px;
-  border: 1px solid var(--border_grey);
-  background: var(--bg_panel);
 }
 
 .settings-section-wide {

@@ -1,7 +1,10 @@
 @import "_variables";
+@import "_mixins";
 
 .timeline-container {
   @include panel(100%, var(--timeline-max));
+  width: 100%;
+  max-width: var(--timeline-max);
   background: var(--bg_panel);
   border: 1px solid var(--border);
   overflow: hidden;
@@ -17,7 +20,7 @@
   box-sizing: border-box;
 }
 
-.timeline > div:not(:first-child) {
+.timeline > div + div {
   border-top: 1px solid var(--border);
 }
 
@@ -28,6 +31,15 @@
 .timeline > .timeline-header,
 .timeline > .top-ref {
   width: 100%;
+}
+
+.timeline > .timeline-header + .timeline-item,
+.timeline > .timeline-header + .thread-line,
+.timeline > .show-newer + .timeline-item,
+.timeline > .show-newer + .thread-line,
+.timeline > .top-ref + .timeline-item,
+.timeline > .top-ref + .thread-line {
+  border-top: 0;
 }
 
 .timeline-header {
@@ -82,6 +94,7 @@
   gap: 4px;
   color: var(--muted-foreground);
   font-size: 12px;
+  font-variant-numeric: tabular-nums;
 }
 
 .page-export-limit input {
@@ -194,20 +207,31 @@
 }
 
 .show-more {
-  display: flex;
-  justify-content: center;
-  padding: var(--space-4);
+  display: block;
+  width: 100%;
+  padding: 8px 0;
   border-top: 1px solid var(--border);
   background: var(--card);
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+
+  a,
+  button,
+  .button {
+    min-height: 32px;
+  }
 }
 
 .show-newer {
-  display: flex;
-  justify-content: center;
-  padding: var(--space-2) var(--space-4);
+  display: block;
+  width: 100%;
+  padding: 6px 0;
   background: var(--faint);
   border-bottom: 1px solid var(--border);
-  font-size: var(--text-8);
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
 }
 
 .top-ref {
@@ -234,23 +258,19 @@
   overflow-wrap: break-word;
   border-left-width: 0;
   min-width: 0;
-  padding: 8px 10px;
+  padding: 0;
   display: flex;
   position: relative;
   background-color: var(--bg_panel);
-}
-
-.thread-line {
-  background-color: var(--bg_panel);
-}
-
-.timeline-item {
-  position: relative;
   transition: background-color var(--transition-fast);
 
   &:hover {
     background-color: var(--faint);
   }
+}
+
+.thread-line {
+  background-color: var(--bg_panel);
 }
 
 .timeline-item-skeleton {
