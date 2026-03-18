@@ -2241,11 +2241,11 @@ proc createLocalRouter*(cfg: Config) =
               echo "[local] failed to prepare backing X list for collection ", col.id, " user=", user.username
               continue
             try:
+            try:
               await syncListMemberToX(ready.collection, user, true)
             except IOError:
               echo "[local] failed affiliates list sync to backing X list for collection ", ready.collection.id, " user=", user.username
               continue
-            upsertMember(collectionId, user)
       for collectionId in selectedIds:
         invalidateHotLocalTimeline(collectionId)
         await invalidateLocalTimelineCache(collectionId)
