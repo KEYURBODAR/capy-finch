@@ -21,8 +21,12 @@ body {
   --shadow-small: none;
   --shadow-medium: none;
   --shadow-large: none;
-  --transition-fast: 100ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 150ms cubic-bezier(0, 0, 0.2, 1);
+  --transition: 220ms cubic-bezier(0, 0, 0.2, 1);
+  --transition-exit: 120ms cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -96,6 +100,7 @@ body {
 *:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+  transition: none !important;
 }
 
 a:focus,
@@ -121,23 +126,24 @@ figure[data-variant="avatar"].is-square {
   border-radius: 0 !important;
 }
 
-h1 {
-  display: block;
-}
-
+h1,
 h2,
 h3 {
+  display: block;
   font-weight: 600;
   letter-spacing: -0.025em;
+  text-wrap: balance;
 }
 
 p {
   margin: 0 0 var(--space-4) 0;
+  text-wrap: pretty;
 }
 
 a {
   color: var(--foreground);
   text-decoration: none;
+  text-underline-offset: 0.2em;
 
   &:hover {
     color: var(--foreground);
@@ -474,5 +480,17 @@ body.fixed-nav .container {
   .settings-grid,
   .settings-input-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+// userinterface-wiki: a11y-reduced-motion-check
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
