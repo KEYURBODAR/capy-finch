@@ -1,0 +1,98 @@
+@import '_variables';
+
+.photo-rail {
+    &-card {
+        float: left;
+        background: transparent;
+        border-radius: 0;
+        width: 100%;
+        margin: 0;
+        border: none;
+        border-top: 1px solid var(--border);
+    }
+
+    &-header {
+        padding: 8px 12px 0;
+    }
+
+    &-header-mobile {
+        display: none;
+        box-sizing: border-box;
+        padding: 8px 12px 0;
+        width: 100%;
+        float: unset;
+        color: var(--finch-accent);
+        justify-content: space-between;
+    }
+
+    &-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 2px 2px;
+        padding: 8px 12px 12px;
+
+        a {
+            position: relative;
+            border-radius: 0;
+            background-color: var(--darker_grey);
+
+            &:before {
+                content: "";
+                display: block;
+                padding-top: 100%;
+            }
+        }
+
+        img {
+            height: 100%;
+            width: 100%;
+            border-radius: 0;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+    }
+}
+
+@include create-toggle(photo-rail-grid, 640px);
+#photo-rail-grid-toggle:checked ~ .photo-rail-grid {
+    padding-bottom: 12px;
+}
+
+@media(max-width: 700px) {
+    .photo-rail-header {
+        display: none;
+    }
+
+    .photo-rail-header-mobile {
+        display: flex;
+    }
+
+    .photo-rail-grid {
+        max-height: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+        transition: max-height 0.4s;
+    }
+
+    .photo-rail-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    #photo-rail-grid-toggle:checked ~ .photo-rail-grid {
+        max-height: 300px;
+    }
+}
+
+@media(max-width: 450px) {
+    .photo-rail-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    #photo-rail-grid-toggle:checked ~ .photo-rail-grid {
+        max-height: 450px;
+    }
+}
