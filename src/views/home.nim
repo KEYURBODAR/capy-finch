@@ -27,7 +27,7 @@ proc renderHome*(): VNode =
 
     tdiv(class="finch-home-examples"):
       span(class="finch-home-examples-label"): text "Examples"
-      tdiv(class="finch-home-chip-row"):
+      tdiv(class="hstack finch-home-chip-row"):
         renderChip("@naval", "@naval")
         renderChip("@elonmusk", "@elonmusk")
         renderChip("naval links 100+", "from:naval filter:links min_faves:100 -filter:replies -filter:quote")

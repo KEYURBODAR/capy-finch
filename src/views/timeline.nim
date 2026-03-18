@@ -55,7 +55,7 @@ proc renderNoneFound(message="Nothing matched this surface right now."): VNode =
 proc renderUnavailable(message: string): VNode =
   let safeMessage = if message.len > 0: message else: "This surface could not be refreshed right now."
   buildHtml(tdiv(class="timeline-header")):
-    h2(class="timeline-none"):
+    tdiv(role="alert", `data-variant`="warning"):
       text safeMessage
 
 proc renderWarning(message: string): VNode =
