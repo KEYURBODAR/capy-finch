@@ -2035,8 +2035,9 @@ proc createLocalRouter*(cfg: Config) =
           continue
         try:
           await syncListMemberToX(collection, user, true)
-        except IOError as e:
-          resp Http503, showError(e.msg, cfg)
+        except IOError:
+          echo "[local] failed bulk add to backing X list for collection ", collection.id, " user=", user.username
+          continue
         upsertMember(collection.id, user)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -2139,14 +2140,10 @@ proc createLocalRouter*(cfg: Config) =
         requireIdentity(cfg, refPath())
       let
         ownerId = ensureOwner(identityKey)
-      var collection = getOrCreateFollowing(ownerId)
-      let ready = await ensureXBackedCollection(collection)
-      if not ready.ok:
-        resp Http503, showError("Could not sync Finch Following to X right now.", cfg)
-      collection = ready.collection
+      let collection = getOrCreateFollowing(ownerId)
       let username = normalizeLocalUsername(@"username")
       let user = await loadUserForLocal(username)
-      if user.username.len > 0:
+      if user.username.len > 0 and collection.xListId.len > 0:
         try:
           await syncFollowingToX(collection, user, false)
         except IOError as e:
@@ -2241,11 +2238,13 @@ proc createLocalRouter*(cfg: Config) =
           if col.id.len > 0:
             let ready = await ensureXBackedCollection(col)
             if not ready.ok:
-              resp Http503, showError("Could not sync this list to X right now.", cfg)
+              echo "[local] failed to prepare backing X list for collection ", col.id, " user=", user.username
+              continue
             try:
               await syncListMemberToX(ready.collection, user, true)
             except IOError:
               echo "[local] failed affiliates list sync to backing X list for collection ", ready.collection.id, " user=", user.username
+              continue
             upsertMember(collectionId, user)
       for collectionId in selectedIds:
         invalidateHotLocalTimeline(collectionId)
