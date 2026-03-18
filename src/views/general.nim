@@ -38,7 +38,7 @@ proc renderNavbar(cfg: Config; req: Request; rss, canonical: string): VNode =
   buildHtml(nav):
     tdiv(class="inner-nav"):
       tdiv(class="nav-item left"):
-        a(class="site-name", href="/"): text cfg.title
+        a(class="site-name", href="/"): text "Finch"
 
       tdiv(class="nav-item right"):
         renderNavAction("Search", "/search", "Search")
@@ -172,11 +172,11 @@ proc renderMain*(body: VNode; req: Request; cfg: Config; prefs=defaultPrefs;
 proc renderError*(error: string): VNode =
   ## Renders error with HTML escaping (safe for user/exception input).
   buildHtml(tdiv(class="panel-container")):
-    tdiv(class="card error-panel", role="alert", `data-variant`="danger"):
-      span: text error
+    tdiv(role="alert", `data-variant`="danger"):
+      text error
 
 proc renderErrorHtml*(error: string): VNode =
   ## Renders error with raw HTML (only use for trusted, hardcoded strings).
   buildHtml(tdiv(class="panel-container")):
-    tdiv(class="card error-panel", role="alert", `data-variant`="danger"):
-      span: verbatim error
+    tdiv(role="alert", `data-variant`="danger"):
+      verbatim error

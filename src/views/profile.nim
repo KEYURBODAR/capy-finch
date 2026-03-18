@@ -6,11 +6,11 @@ import renderutils, search, actions, local_ui, timeline
 import ".."/[types, utils, formatters, query, local_data]
 
 proc renderStat(num: int; label, href: string): VNode =
-  buildHtml(li):
-    a(href=href, class="profile-stat-link"):
-      span(class="profile-stat-num", `data-tooltip`=($num)):
-        text compactCount(num)
-      span(class="profile-stat-header"): text label
+  buildHtml(a(href=href, class="profile-stat")):
+    span(class="profile-stat-value", `data-tooltip`=($num)):
+      text compactCount(num)
+    span(class="profile-stat-label"):
+      text label
 
 proc renderUserCard*(user: User; prefs: Prefs; profileActions=FinchProfileActions()): VNode =
   buildHtml(tdiv(class="profile-card card")):
@@ -60,7 +60,7 @@ proc renderUserCard*(user: User; prefs: Prefs; profileActions=FinchProfileAction
           icon "calendar", getJoinDate(user)
 
       tdiv(class="profile-card-extra-links"):
-        ul(class="profile-statlist"):
+        tdiv(class="profile-statlist"):
           renderStat(user.tweets, "Tweets", "/" & user.username)
           renderStat(user.following, "Following", "/" & user.username & "/following")
           renderStat(user.followers, "Followers", "/" & user.username & "/followers")
@@ -216,7 +216,7 @@ proc renderAffiliateBulkPanel(ownerId: string; user: User; affiliateResults: Res
           input(`type`="checkbox", name=("affiliate_" & affiliate.username), checked="")
           a(class="affiliate-member-link", href=("/" & affiliate.username)):
             if affiliate.userPic.len > 0:
-              genAvatarFigure(affiliate.getUserPic("_bigger"), ("@" & affiliate.username), size="small", style="border-radius: 0")
+              genAvatarFigure(affiliate.getUserPic("_bigger"), ("@" & affiliate.username), size="small")
             tdiv(class="affiliate-member-copy"):
               tdiv(class="affiliate-member-title"):
                 linkUser(affiliate, class="username")
