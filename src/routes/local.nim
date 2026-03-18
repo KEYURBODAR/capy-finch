@@ -1971,11 +1971,18 @@ proc createLocalRouter*(cfg: Config) =
           let ready = await ensureXBackedCollection(col)
           if not ready.ok:
             resp Http503, showError("Could not sync list membership to X right now.", cfg)
-          await syncListMemberToX(ready.collection, user, true)
+          try:
+            await syncListMemberToX(ready.collection, user, true)
+          except IOError as e:
+            resp Http503, showError(e.msg, cfg)
           upsertMember(collectionId, user)
         elif isMember(collectionId, user.username):
           if col.xListId.len > 0:
-            await syncListMemberToX(col, user, false)
+            try:
+              await syncListMemberToX(col, user, false)
+            except IOError as e:
+              echo "[local] syncListMemberToX remove failed for ", user.username, " from ", col.id, ": ", e.msg
+              continue
           removeMember(collectionId, user.username)
       for collectionId in allowed:
         invalidateHotLocalTimeline(collectionId)
@@ -2020,7 +2027,10 @@ proc createLocalRouter*(cfg: Config) =
         let user = await loadUserForLocal(username)
         if user.username.len == 0:
           continue
-        await syncListMemberToX(collection, user, true)
+        try:
+          await syncListMemberToX(collection, user, true)
+        except IOError as e:
+          resp Http503, showError(e.msg, cfg)
         upsertMember(collection.id, user)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -2050,7 +2060,10 @@ proc createLocalRouter*(cfg: Config) =
       let username = normalizeLocalUsername(@"username")
       let user = await loadUserForLocal(username)
       if user.username.len > 0 and collection.xListId.len > 0:
-        await syncListMemberToX(collection, user, false)
+        try:
+          await syncListMemberToX(collection, user, false)
+        except IOError as e:
+          resp Http503, showError(e.msg, cfg)
       removeMember(collection.id, username)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -2071,7 +2084,11 @@ proc createLocalRouter*(cfg: Config) =
         for username in usernames:
           let user = await loadUserForLocal(username)
           if user.username.len > 0:
-            await syncListMemberToX(collection, user, false)
+            try:
+              await syncListMemberToX(collection, user, false)
+            except IOError as e:
+              echo "[local] syncListMemberToX bulk remove failed for ", user.username, " from ", collection.id, ": ", e.msg
+              continue
       removeMembers(collection.id, usernames)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -2210,7 +2227,11 @@ proc createLocalRouter*(cfg: Config) =
             let ready = await ensureXBackedCollection(col)
             if not ready.ok:
               resp Http503, showError("Could not sync this list to X right now.", cfg)
-            await syncListMemberToX(ready.collection, user, true)
+            try:
+              await syncListMemberToX(ready.collection, user, true)
+            except IOError as e:
+              echo "[local] syncListMemberToX add failed for ", user.username, " to ", ready.collection.id, ": ", e.msg
+              continue
             upsertMember(collectionId, user)
       for collectionId in selectedIds:
         invalidateHotLocalTimeline(collectionId)
