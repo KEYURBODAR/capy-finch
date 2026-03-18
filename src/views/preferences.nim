@@ -64,41 +64,42 @@ proc renderPreferences*(prefs: Prefs; path, identityKey: string; collections: se
             genInput("replaceYouTube", "YouTube", prefs.replaceYouTube, "piped / invidious hostname", autofocus=false)
             genInput("replaceReddit", "Reddit", prefs.replaceReddit, "teddit / libreddit hostname", autofocus=false)
 
-        details():
-          summary: text "Finch data"
-          if identityKey.len > 0:
-            tdiv(class="settings-input-grid"):
-              genSecretInput("identity_key_display", "Current recovery key", identityKey)
-            tdiv(class="settings-toggle-grid identity-stats"):
-              tdiv(class="identity-stat"):
-                span(class="identity-stat-label"): text "Following"
-                span(class="identity-stat-value"): text $followingCount
-              tdiv(class="identity-stat"):
-                span(class="identity-stat-label"): text "Lists"
-                span(class="identity-stat-value"): text $listCount
-            tdiv(class="settings-actions"):
-              a(class="button outline", href="/f/following"): text "Open Following"
-              a(class="button outline", href="/f/lists"): text "Open Lists"
-              a(class="button outline", href="/f/data/export"): text "Export data"
-              a(class="button outline", href=("/f/identity?referer=" & path)): text "Manage key"
-              buttonReferer("/api/f/data/reset", "Cleanup caches", path, class="pref-reset")
-              buttonReferer("/api/f/data/delete", "Delete everything", path, class="pref-reset")
-          else:
-            tdiv(class="settings-actions"):
-              a(class="button outline", href=("/f/identity?referer=" & path)): text "Create or import key"
-          form(`method`="post", action="/api/f/identity/import", autocomplete="off", class="settings-form compact data-key-form"):
-            refererField(path)
-            tdiv(class="settings-input-grid"):
-              genInput("identity_key", "Import recovery key", "", "Paste recovery key", class="full", autofocus=false)
-            tdiv(class="settings-actions"):
-              button(`type`="submit", class="button outline"):
-                text(if identityKey.len > 0: "Replace key" else: "Import key")
-
       tdiv(class="settings-actions"):
         button(`type`="submit", class="button"):
           text "Save preferences"
         text " "
         buttonReferer("/resetprefs", "Reset", path, class="pref-reset")
+
+    tdiv(class="settings-grid"):
+      details():
+        summary: text "Finch data"
+        if identityKey.len > 0:
+          tdiv(class="settings-input-grid"):
+            genSecretInput("identity_key_display", "Current recovery key", identityKey)
+          tdiv(class="settings-toggle-grid identity-stats"):
+            tdiv(class="identity-stat"):
+              span(class="identity-stat-label"): text "Following"
+              span(class="identity-stat-value"): text $followingCount
+            tdiv(class="identity-stat"):
+              span(class="identity-stat-label"): text "Lists"
+              span(class="identity-stat-value"): text $listCount
+          tdiv(class="settings-actions"):
+            a(class="button outline", href="/f/following"): text "Open Following"
+            a(class="button outline", href="/f/lists"): text "Open Lists"
+            a(class="button outline", href="/f/data/export"): text "Export data"
+            a(class="button outline", href=("/f/identity?referer=" & path)): text "Manage key"
+            buttonReferer("/api/f/data/reset", "Cleanup caches", path, class="pref-reset")
+            buttonReferer("/api/f/data/delete", "Delete everything", path, class="pref-reset")
+        else:
+          tdiv(class="settings-actions"):
+            a(class="button outline", href=("/f/identity?referer=" & path)): text "Create or import key"
+        form(`method`="post", action="/api/f/identity/import", autocomplete="off", class="settings-form compact data-key-form"):
+          refererField(path)
+          tdiv(class="settings-input-grid"):
+            genInput("identity_key", "Import recovery key", "", "Paste recovery key", class="full", autofocus=false)
+          tdiv(class="settings-actions"):
+            button(`type`="submit", class="button outline"):
+              text(if identityKey.len > 0: "Replace key" else: "Import key")
 
     form(`method`="post", action="/api/f/data/import", autocomplete="off", class="settings-form compact data-import-form"):
       refererField(path)

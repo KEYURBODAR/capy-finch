@@ -21,6 +21,9 @@ proc renderMemberMini(member: FinchCollectionMember; linked=true): VNode =
 
 proc renderMemberIdentity(member: FinchCollectionMember; square=false): VNode =
   let avatarStyle = if square: "border-radius: 0" else: ""
+  let displayName =
+    if member.fullname.len > 0: member.fullname
+    else: "@" & member.username
   buildHtml(a(class="finch-table-account", href=("/" & member.username), title=member.fullname)):
     if member.avatar.len > 0:
       genAvatarFigure(member.avatar, ("@" & member.username), size="small", style=avatarStyle)
@@ -28,9 +31,11 @@ proc renderMemberIdentity(member: FinchCollectionMember; square=false): VNode =
       span(class="finch-member-fallback"): text member.username[0 .. 0].toUpperAscii
     tdiv(class="finch-table-account-copy"):
       tdiv(class="finch-table-account-primary"):
-        span(class="finch-table-account-handle"): text "@" & member.username
+        span(class="finch-table-account-name"): text displayName
         memberVerifiedIcon(member)
         memberAffiliateBadge(member)
+      tdiv(class="finch-table-account-meta"):
+        text "@" & member.username
 
 proc renderAttentionIdentity(entity: AttentionEntity): VNode =
   let isAccount = entity.kind == attentionAccount

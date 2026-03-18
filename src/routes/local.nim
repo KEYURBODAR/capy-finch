@@ -1899,7 +1899,10 @@ proc createLocalRouter*(cfg: Config) =
         if not ready.ok:
           resp Http503, showError("Could not sync Finch Following to X right now.", cfg)
         collection = ready.collection
-      await syncFollowingToX(collection, user, newState)
+      try:
+        await syncFollowingToX(collection, user, newState)
+      except IOError as e:
+        resp Http503, showError(e.msg, cfg)
       discard setFollowing(ownerId, user, newState)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -1922,7 +1925,11 @@ proc createLocalRouter*(cfg: Config) =
         let user = await loadUserForLocal(username)
         if user.username.len == 0:
           continue
-        await syncFollowingToX(collection, user, true)
+        try:
+          await syncFollowingToX(collection, user, true)
+        except IOError:
+          echo "[local] failed bulk add to backing X following list for user=", user.username
+          continue
         discard setFollowing(ownerId, user, true)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -1971,11 +1978,17 @@ proc createLocalRouter*(cfg: Config) =
           let ready = await ensureXBackedCollection(col)
           if not ready.ok:
             resp Http503, showError("Could not sync list membership to X right now.", cfg)
-          await syncListMemberToX(ready.collection, user, true)
+          try:
+            await syncListMemberToX(ready.collection, user, true)
+          except IOError as e:
+            resp Http503, showError(e.msg, cfg)
           upsertMember(collectionId, user)
         elif isMember(collectionId, user.username):
           if col.xListId.len > 0:
-            await syncListMemberToX(col, user, false)
+            try:
+              await syncListMemberToX(col, user, false)
+            except IOError:
+              echo "[local] failed to remove member from backing X list for collection ", col.id, " user=", user.username
           removeMember(collectionId, user.username)
       for collectionId in allowed:
         invalidateHotLocalTimeline(collectionId)
@@ -2020,7 +2033,10 @@ proc createLocalRouter*(cfg: Config) =
         let user = await loadUserForLocal(username)
         if user.username.len == 0:
           continue
-        await syncListMemberToX(collection, user, true)
+        try:
+          await syncListMemberToX(collection, user, true)
+        except IOError as e:
+          resp Http503, showError(e.msg, cfg)
         upsertMember(collection.id, user)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -2050,7 +2066,10 @@ proc createLocalRouter*(cfg: Config) =
       let username = normalizeLocalUsername(@"username")
       let user = await loadUserForLocal(username)
       if user.username.len > 0 and collection.xListId.len > 0:
-        await syncListMemberToX(collection, user, false)
+        try:
+          await syncListMemberToX(collection, user, false)
+        except IOError as e:
+          resp Http503, showError(e.msg, cfg)
       removeMember(collection.id, username)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -2071,7 +2090,10 @@ proc createLocalRouter*(cfg: Config) =
         for username in usernames:
           let user = await loadUserForLocal(username)
           if user.username.len > 0:
-            await syncListMemberToX(collection, user, false)
+            try:
+              await syncListMemberToX(collection, user, false)
+            except IOError:
+              echo "[local] failed bulk removal from backing X list for collection ", collection.id, " user=", user.username
       removeMembers(collection.id, usernames)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -2125,7 +2147,10 @@ proc createLocalRouter*(cfg: Config) =
       let username = normalizeLocalUsername(@"username")
       let user = await loadUserForLocal(username)
       if user.username.len > 0:
-        await syncFollowingToX(collection, user, false)
+        try:
+          await syncFollowingToX(collection, user, false)
+        except IOError as e:
+          resp Http503, showError(e.msg, cfg)
       removeMember(collection.id, username)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -2144,7 +2169,10 @@ proc createLocalRouter*(cfg: Config) =
         for username in usernames:
           let user = await loadUserForLocal(username)
           if user.username.len > 0:
-            await syncFollowingToX(collection, user, false)
+            try:
+              await syncFollowingToX(collection, user, false)
+            except IOError:
+              echo "[local] failed bulk removal from backing X following list for user=", user.username
       removeMembers(collection.id, usernames)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -2167,7 +2195,11 @@ proc createLocalRouter*(cfg: Config) =
         let user = await loadUserForLocal(username)
         if user.username.len == 0:
           continue
-        await syncFollowingToX(collection, user, true)
+        try:
+          await syncFollowingToX(collection, user, true)
+        except IOError:
+          echo "[local] failed affiliates add to backing X following list for user=", user.username
+          continue
         discard setFollowing(ownerId, user, true)
       invalidateHotLocalTimeline(collection.id)
       await invalidateLocalTimelineCache(collection.id)
@@ -2210,7 +2242,10 @@ proc createLocalRouter*(cfg: Config) =
             let ready = await ensureXBackedCollection(col)
             if not ready.ok:
               resp Http503, showError("Could not sync this list to X right now.", cfg)
-            await syncListMemberToX(ready.collection, user, true)
+            try:
+              await syncListMemberToX(ready.collection, user, true)
+            except IOError:
+              echo "[local] failed affiliates list sync to backing X list for collection ", ready.collection.id, " user=", user.username
             upsertMember(collectionId, user)
       for collectionId in selectedIds:
         invalidateHotLocalTimeline(collectionId)

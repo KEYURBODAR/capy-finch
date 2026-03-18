@@ -104,8 +104,12 @@
     list-style: none;
     border-top: 1px solid var(--border);
 
-    li {
-        display: block;
+    a.profile-stat {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        text-decoration: none;
+        color: inherit;
         text-align: left;
         padding: 4px 16px 4px 0;
         margin-right: 16px;
@@ -117,21 +121,14 @@
             padding-right: 0;
             border-right: none;
         }
+
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
 
-.profile-stat-link {
-    display: grid;
-    gap: 6px;
-    justify-items: start;
-    color: inherit;
-
-    &:hover {
-        text-decoration: none;
-    }
-}
-
-.profile-stat-header {
+.profile-stat-label {
     font-weight: 600;
     color: var(--muted-foreground);
     font-size: 11px;
@@ -139,7 +136,7 @@
     text-transform: uppercase;
 }
 
-.profile-stat-num {
+.profile-stat-value {
     display: inline-flex;
     color: var(--foreground);
     margin-top: 0;

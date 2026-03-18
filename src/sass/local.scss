@@ -507,20 +507,20 @@
 }
 
 .finch-table-account-copy {
-  display: flex;
-  align-items: center;
+  display: grid;
+  gap: 2px;
   min-width: 0;
 }
 
 .finch-table-account-primary {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 6px;
   min-width: 0;
 }
 
-.finch-table-account-handle {
+.finch-table-account-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -534,7 +534,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: none;
+  display: block;
 }
 
 .finch-table-num {
