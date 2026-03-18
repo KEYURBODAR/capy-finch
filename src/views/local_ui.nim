@@ -66,7 +66,7 @@ proc renderCollectionCard*(collection: FinchCollection): VNode =
   let href =
     if collection.kind == following: "/f/following"
     else: "/f/lists/" & collection.id
-  buildHtml(a(class="finch-collection-card", href=href)):
+  buildHtml(a(class="finch-collection-card card", href=href)):
     tdiv(class="finch-collection-card-head"):
       h3(class="finch-collection-card-title"): text collection.name
       span(class="finch-collection-card-count"):

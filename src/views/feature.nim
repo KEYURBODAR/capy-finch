@@ -4,6 +4,7 @@ import karax/[karaxdsl, vdom]
 proc renderFeature*(): VNode =
   buildHtml(tdiv(class="overlay-panel")):
     h2: text "Not supported"
-    p: text "This feature isn't available in Finch yet."
+    tdiv(role="alert", `data-variant`="warning"):
+      text "This feature isn't available in Finch yet."
     p:
       a(href="/"): text "← Back to home"

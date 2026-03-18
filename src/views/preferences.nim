@@ -102,7 +102,7 @@ proc renderPreferences*(prefs: Prefs; path, identityKey: string; collections: se
 
     form(`method`="post", action="/api/f/data/import", autocomplete="off", class="settings-form compact data-import-form"):
       refererField(path)
-      section(class="settings-section settings-section-wide"):
+      section(class="settings-section-wide"):
         h2(class="settings-section-title"): text "Import Finch bundle"
         p(class="settings-section-desc"): text "Paste an exported Finch JSON bundle to restore Following and Lists on this browser."
         tdiv(class="settings-input-grid"):
