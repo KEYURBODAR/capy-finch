@@ -2,6 +2,7 @@
   'use strict';
 
   // infiniteScroll.js v4
+  // Click-only pagination handler; Finch intentionally does not auto-load on scroll.
   function createSkeletonHTML() {
     return '<div class="timeline-item timeline-item-skeleton">' +
       '<figure data-variant="avatar" role="status" class="skeleton box"></figure>' +

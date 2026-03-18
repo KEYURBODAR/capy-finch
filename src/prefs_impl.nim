@@ -51,7 +51,7 @@ macro genPrefs*(prefDsl: untyped) =
 
 genPrefs:
   Display:
-    infiniteScroll(checkbox, true):
+    infiniteScroll(checkbox, false):
       "Infinite scrolling (experimental, requires JavaScript)"
 
     stickyProfile(checkbox, true):
