@@ -358,7 +358,7 @@ proc renderQuoteMedia(quote: Tweet; prefs: Prefs; path: string): VNode =
       renderGif(quote.gif.get(), prefs)
 
 proc renderCommunityNote(note: string; prefs: Prefs): VNode =
-  buildHtml(tdiv(class="community-note")):
+  buildHtml(tdiv(class="community-note", role="alert", `data-variant`="warning")):
     tdiv(class="community-note-header"):
       icon "group"
       span: text "Community note"

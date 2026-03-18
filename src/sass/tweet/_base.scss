@@ -13,6 +13,7 @@
   flex: 1;
   min-width: 0;
   margin-left: var(--feed-avatar-slot);
+  padding: 12px 16px;
   pointer-events: none;
   z-index: 1;
 }
@@ -79,6 +80,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 8px;
 }
 
 .fullname-and-username {
@@ -86,11 +88,17 @@
   align-items: center;
   flex-wrap: wrap;
   min-width: 0;
+  flex: 1 1 auto;
+
+  > * {
+    flex-shrink: 1;
+    min-width: 0;
+  }
 }
 
 .fullname {
   @include ellipsis;
-  flex-shrink: 2;
+  flex-shrink: 1;
   max-width: 80%;
   font-size: 14px;
   font-weight: 700;
@@ -99,7 +107,7 @@
 
 .username {
   @include ellipsis;
-  min-width: 1.6em;
+  min-width: 0;
   margin-left: 0.35em;
   word-wrap: normal;
 }
@@ -250,27 +258,31 @@
 }
 
 .retweet-header {
-  margin-top: -5px !important;
-  margin-bottom: 2px;
-  font-size: 12px;
+  margin-top: -2px !important;
+  margin-bottom: 4px;
+  font-size: 0.8rem;
   color: var(--muted-foreground);
 }
 
 .retweet-header .badge,
 .pinned .badge {
   padding: 0.15rem 0.45rem;
-  border-radius: 0;
 }
 
 .tweet-stats {
   margin-bottom: -3px;
   -webkit-user-select: none;
+  font-variant-numeric: tabular-nums;
+  gap: 0.75rem;
 }
 
 .tweet-stat {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  min-width: 32px;
   padding-top: 5px;
-  min-width: 1em;
-  margin-right: 0.8em;
+  margin-right: 0;
 }
 
 .show-thread {
@@ -285,7 +297,6 @@
   padding: 12px;
   border: solid 1px var(--dark_grey);
   box-sizing: border-box;
-  border-radius: 0;
   background-color: var(--bg_color);
   z-index: 2;
 }
@@ -297,11 +308,15 @@
   top: 0;
   position: absolute;
   -webkit-user-select: none;
-  transition: background-color var(--transition-fast);
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
   z-index: 0;
 
   &:hover {
     background-color: var(--bg_hover);
+  }
+
+  &:active {
+    transform: scale(0.98);
   }
 }
 
@@ -318,36 +333,29 @@
 }
 
 .community-note {
-  background-color: var(--bg_elements);
   margin-top: 10px;
-  border: solid 1px var(--dark_grey);
-  border-radius: 0;
   overflow: hidden;
   pointer-events: all;
 
-  &:hover {
-    background-color: var(--bg_panel);
-    border-color: var(--grey);
+  &[role="alert"] {
+    padding: 0;
+    display: block;
   }
 }
 
 .community-note-header {
-  background-color: var(--bg_hover);
   font-weight: 700;
-  padding: 8px 10px;
-  padding-top: 6px;
+  padding: 8px 10px 0;
   display: flex;
   align-items: center;
   gap: 2px;
 
   .icon-container {
     flex-shrink: 0;
-    color: var(--finch-accent);
   }
 }
 
 .community-note-text {
   white-space: pre-line;
-  padding: 10px 10px;
-  padding-top: 6px;
+  padding: 6px 10px 10px;
 }

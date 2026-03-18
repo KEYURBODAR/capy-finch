@@ -8,19 +8,22 @@
 }
 
 .card-container {
-  border: 1px solid var(--border_grey);
-  border-radius: 0;
-  background-color: var(--card);
+  border: 1px solid var(--card-border, var(--border));
+  background-color: var(--card-background, var(--card));
   overflow: hidden;
   color: inherit;
   display: flex;
   flex-direction: row;
   text-decoration: none !important;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
 
   &:hover {
     border-color: var(--foreground);
     background-color: var(--accent);
+  }
+
+  &:active {
+    transform: scale(0.98);
   }
 
   .attachments {
@@ -119,7 +122,7 @@
   .card-image {
     position: unset;
     border-style: solid;
-    border-color: var(--border_grey);
+    border-color: var(--card-border, var(--border));
     border-width: 0;
     border-bottom-width: 1px;
   }
