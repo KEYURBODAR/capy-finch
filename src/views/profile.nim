@@ -219,12 +219,12 @@ proc renderAffiliateBulkPanel(ownerId: string; user: User; affiliateResults: Res
               genAvatarFigure(affiliate.getUserPic("_bigger"), ("@" & affiliate.username), size="small")
             tdiv(class="affiliate-member-copy"):
               tdiv(class="affiliate-member-title"):
-                linkUser(affiliate, class="username")
+                linkUser(affiliate, class="fullname")
                 verifiedIcon(affiliate)
                 affiliateBadge(affiliate)
               if affiliate.fullname.len > 0 and affiliate.fullname.toLowerAscii != affiliate.username.toLowerAscii:
                 span(class="affiliate-member-subtitle"):
-                  text affiliate.fullname
+                  text affiliate.username
 
     tdiv(class="affiliate-bulk-actions"):
       button(`type`="submit", class="button outline"):

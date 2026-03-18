@@ -21,7 +21,7 @@
 .tweet-export-select {
   position: absolute;
   top: 12px;
-  left: 12px;
+  left: 8px;
   z-index: 3;
   width: 16px;
   height: 16px;
@@ -45,7 +45,7 @@
 }
 
 .timeline-item.select-enabled {
-  --feed-avatar-slot: 84px;
+  --feed-avatar-slot: 86px;
 }
 
 .tweet-content {

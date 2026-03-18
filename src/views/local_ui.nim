@@ -21,9 +21,10 @@ proc renderMemberMini(member: FinchCollectionMember; linked=true): VNode =
 
 proc renderMemberIdentity(member: FinchCollectionMember; square=false): VNode =
   let avatarStyle = if square: "border-radius: 0" else: ""
+  let hasFullName = member.fullname.len > 0 and member.fullname.toLowerAscii != member.username.toLowerAscii
   let displayName =
-    if member.fullname.len > 0: member.fullname
-    else: "@" & member.username
+    if hasFullName: member.fullname
+    else: member.username
   buildHtml(a(class="finch-table-account", href=("/" & member.username), title=member.fullname)):
     if member.avatar.len > 0:
       genAvatarFigure(member.avatar, ("@" & member.username), size="small", style=avatarStyle)
@@ -34,8 +35,6 @@ proc renderMemberIdentity(member: FinchCollectionMember; square=false): VNode =
         span(class="finch-table-account-name"): text displayName
         memberVerifiedIcon(member)
         memberAffiliateBadge(member)
-      tdiv(class="finch-table-account-meta"):
-        text "@" & member.username
 
 proc renderAttentionIdentity(entity: AttentionEntity): VNode =
   let isAccount = entity.kind == attentionAccount
@@ -441,6 +440,11 @@ proc renderLocalMembers*(collection: FinchCollection; members: seq[FinchCollecti
             text "Remove selected"
       tdiv(class="table finch-table-wrap"):
         table(class="finch-members-table"):
+          colgroup:
+            col(class="finch-col-select")
+            col(class="finch-col-profile")
+            col(class="finch-col-saved")
+            col(class="finch-col-actions")
           thead:
             tr:
               th(class="finch-table-select-col")

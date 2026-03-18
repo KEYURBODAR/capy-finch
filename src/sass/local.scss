@@ -283,9 +283,9 @@
 
 .affiliate-member-row {
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr);
-  align-items: center;
-  gap: 4px;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
   padding: 6px 0;
   border-bottom: 1px solid var(--border);
 }
@@ -314,14 +314,15 @@
 .affiliate-member-title {
   display: flex;
   align-items: center;
-  gap: 3px;
-  flex-wrap: nowrap;
+  gap: 4px;
+  flex-wrap: wrap;
   min-width: 0;
 }
 
 .affiliate-member-subtitle {
   color: var(--muted-foreground);
   font-size: 12px;
+  line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -486,9 +487,37 @@
   border-collapse: collapse;
 }
 
+.finch-members-table,
+.finch-list-members-table {
+  table-layout: fixed;
+}
+
+.finch-col-select {
+  width: 44px;
+}
+
+.finch-col-saved {
+  width: 170px;
+}
+
+.finch-col-actions {
+  width: 300px;
+}
+
+.finch-col-metric {
+  width: 120px;
+}
+
 .finch-table-wrap th,
 .finch-table-wrap td {
   vertical-align: middle;
+}
+
+.finch-members-table th,
+.finch-members-table td,
+.finch-list-members-table th,
+.finch-list-members-table td {
+  overflow: hidden;
 }
 
 .finch-table-wrap .finch-table-empty {
@@ -497,12 +526,13 @@
 }
 
 .finch-table-account {
-  display: inline-grid;
+  display: grid;
   grid-template-columns: 28px minmax(0, 1fr);
   gap: 10px;
   align-items: center;
   color: inherit;
   min-width: 0;
+  width: 100%;
   max-width: 100%;
 }
 
@@ -521,13 +551,14 @@
   display: grid;
   gap: 2px;
   min-width: 0;
+  align-content: center;
 }
 
 .finch-table-account-primary {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 4px;
   min-width: 0;
 }
 
@@ -537,6 +568,7 @@
   white-space: nowrap;
   color: var(--foreground);
   font-weight: 600;
+  min-width: 0;
 }
 
 .finch-table-account-meta {
@@ -554,7 +586,7 @@
 }
 
 .finch-table-select-col {
-  width: 36px;
+  width: 44px;
   text-align: center;
 }
 
@@ -573,7 +605,7 @@
 .affiliate-member-row.tickbox,
 .affiliate-member-row.checkbox-container {
   justify-content: flex-start;
-  gap: 8px;
+  gap: 12px;
 }
 
 .finch-member-select input[type="checkbox"],
@@ -587,6 +619,11 @@
 .affiliate-member-row.checkbox-container {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+.affiliate-member-row > a,
+.affiliate-member-row > .affiliate-member-link {
+  min-width: 0;
 }
 
 .finch-table-actions-col {

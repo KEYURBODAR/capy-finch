@@ -14,7 +14,10 @@ proc renderListTabs*(query: Query; path: string): VNode =
 
 proc renderListMembers*(results: Result[User]): VNode =
   buildHtml(tdiv(class="table finch-table-wrap")):
-    table:
+    table(class="finch-list-members-table"):
+      colgroup:
+        col(class="finch-col-profile")
+        col(class="finch-col-metric")
       thead:
         tr:
           th: text "Profile"
@@ -26,17 +29,23 @@ proc renderListMembers*(results: Result[User]): VNode =
               text (if results.errorText.len > 0: results.errorText else: "No members available for this X list right now.")
         else:
           for user in results.content:
+            let
+              hasFullName = user.fullname.len > 0 and user.fullname.toLowerAscii != user.username.toLowerAscii
+              displayName = if hasFullName: user.fullname else: user.username
             tr:
               td:
                 a(class="finch-table-account", href=("/" & user.username)):
                   if user.userPic.len > 0:
                     genAvatarFigure(user.getUserPic("_bigger"), ("@" & user.username), size="small", style="border-radius: 0")
                   tdiv(class="finch-table-account-copy"):
-                    span(class="finch-table-account-primary"):
-                      span(class="finch-table-account-handle"):
-                        text "@" & user.username
+                    tdiv(class="finch-table-account-primary"):
+                      span(class="finch-table-account-name"):
+                        text displayName
                       verifiedIcon(user)
                       affiliateBadge(user)
+                    if hasFullName:
+                      tdiv(class="finch-table-account-meta"):
+                        text user.username
               td(class="finch-table-num"):
                 text compactCount(user.followers)
 
