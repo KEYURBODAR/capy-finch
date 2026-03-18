@@ -1,6 +1,7 @@
 (function() {
   'use strict';
 
+  // infiniteScroll.js v4
   function createSkeletonHTML() {
     return '<div class="timeline-item timeline-item-skeleton">' +
       '<figure data-variant="avatar" role="status" class="skeleton box"></figure>' +
@@ -70,7 +71,9 @@
         skeletons.forEach(function(s) { s.remove(); });
         btn.removeAttribute('disabled');
         btn.textContent = 'Load more';
-        window.location.href = url;
+        if (window.ot && window.ot.toast) {
+          window.ot.toast('Could not load more posts. Try again.', '', { variant: 'danger', placement: 'bottom-right' });
+        }
       });
   });
 })();

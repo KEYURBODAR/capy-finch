@@ -1,23 +1,10 @@
-window.finchToast = (function() {
-  function toast(message, variant) {
-    var container = document.querySelector('.toast-container');
-    if (!container) return;
-    var el = document.createElement('div');
-    el.className = 'toast';
-    if (variant) el.dataset.variant = variant;
-    el.innerHTML = '<span class="toast-message">' + message + '</span>';
-    el.dataset.entering = '';
-    container.appendChild(el);
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() { delete el.dataset.entering; });
-    });
-    setTimeout(function() {
-      el.dataset.exiting = '';
-      el.addEventListener('transitionend', function() { el.remove(); }, { once: true });
-    }, 3000);
+window.finchToast = function(message, variant) {
+  if (window.ot && window.ot.toast) {
+    var opts = { placement: 'bottom-right' };
+    if (variant) opts.variant = variant;
+    window.ot.toast(message, '', opts);
   }
-  return toast;
-})();
+};
 
 (() => {
   const BUTTON_TEXT = {

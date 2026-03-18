@@ -48,15 +48,17 @@ proc renderNavbar(cfg: Config; req: Request; rss, canonical: string): VNode =
           renderNavAction("Admin", "/api/private/meta", "Private Admin")
         renderNavAction("Prefs", ("/settings?referer=" & encodeUrl(path)), "Preferences")
         tdiv(class="nav-overflow-menu"):
-          button(class="button ghost small", popovertarget="nav-popover"):
-            text "Menu"
-          tdiv(popover="", id="nav-popover"):
+          verbatim "<ot-dropdown>"
+          button(class="button ghost small nav-overflow-trigger", popovertarget="nav-popover", `aria-label`="Menu", `aria-expanded`="false"):
+            text "···"
+          tdiv(popover="", role="menu", id="nav-popover", class="nav-overflow-popover"):
             a(role="menuitem", href="/search"): text "Search"
             a(role="menuitem", href="/f/following"): text "Following"
             a(role="menuitem", href="/f/lists"): text "Lists"
             if cfg.enableAdmin:
               a(role="menuitem", href="/api/private/meta"): text "Admin"
             a(role="menuitem", href=("/settings?referer=" & encodeUrl(path))): text "Preferences"
+          verbatim "</ot-dropdown>"
 
 proc renderHead*(prefs: Prefs; cfg: Config; req: Request; titleText=""; desc="";
                  video=""; images: seq[string] = @[]; banner=""; ogTitle="";
@@ -98,8 +100,7 @@ proc renderHead*(prefs: Prefs; cfg: Config; req: Request; titleText=""; desc="";
       script(src="/js/hls.min.js", `defer`="")
       script(src="/js/hlsPlayback.js", `defer`="")
 
-    if prefs.infiniteScroll:
-      script(src="/js/infiniteScroll.js?v=3", `defer`="")
+    script(src="/js/infiniteScroll.js?v=4", `defer`="")
 
     title:
       if titleText.len > 0:

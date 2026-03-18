@@ -22,7 +22,7 @@ proc renderNewer*(query: Query; path: string; focus=""): VNode =
     p = if focus.len > 0: path.replace("#m", focus) else: path
   buildHtml(tdiv(class="show-newer")):
     a(class="button ghost small", href=(p & url)):
-      text "← Back to start"
+      text "↑ Load newer"
 
 proc renderMore*(query: Query; cursor: string; focus=""): VNode =
   buildHtml(nav(class="finch-pagination")):
